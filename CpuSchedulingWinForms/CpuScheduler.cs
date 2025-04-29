@@ -47,11 +47,11 @@ namespace CpuSchedulingWinForms
 
         private void btnFCFS_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if(txtProcess.Text != "")
             {
                 Algorithms.fcfsAlgorithm(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                if(numberOfProcess <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);
@@ -72,7 +72,7 @@ namespace CpuSchedulingWinForms
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
-                for (int i = 0; i < numberOfProcess; i++)
+                for(int i = 0; i < numberOfProcess; i++)
                 {
                     //listBoxProcess.Items.Add(" Process " + (i + 1));
                     var item = new ListViewItem();
@@ -94,18 +94,18 @@ namespace CpuSchedulingWinForms
 
         private void btnSJF_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if(txtProcess.Text != "")
             {
                 Algorithms.sjfAlgorithm(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                if(numberOfProcess <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);
                     this.progressBar2.Increment(13);
                     this.progressBar2.SetState(1);
                 }
-                else if (numberOfProcess > 10)
+                else if(numberOfProcess > 10)
                 {
                     this.progressBar1.Increment(15);
                     this.progressBar1.SetState(1);
@@ -177,6 +177,136 @@ namespace CpuSchedulingWinForms
             else
             {
                 MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtProcess.Focus();
+            }
+        }
+
+        private void btnSRTF_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtProcess.Text))
+            {
+                if (int.TryParse(txtProcess.Text, out int numberOfProcess) && numberOfProcess > 0)
+                {
+                    Dictionary<string, double> metrics = Algorithms.srtfAlgorithm(txtProcess.Text);
+
+                    string resultsMessage = string.Format(
+                        "SRTF Algorithm Results:\n\n" +
+                        "Average Waiting Time (AWT): {0:F2} sec\n" +
+                        "Average Turnaround Time (ATT): {1:F2} sec\n" +
+                        "CPU Utilization: {2:F1} %\n" +
+                        "Throughput: {3:F3} processes/sec",
+                        metrics["AWT"],
+                        metrics["ATT"],
+                        metrics["CPU_Utilization"],
+                        metrics["Throughput"]
+                    );
+                    MessageBox.Show(resultsMessage, "SRTF Metrics", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (numberOfProcess <= 10)
+                    {
+                        this.progressBar1.Increment(4);
+                        this.progressBar1.SetState(1);
+                        this.progressBar2.Increment(13);
+                        this.progressBar2.SetState(1);
+                    }
+                    else
+                    {
+                        this.progressBar1.Increment(15);
+                        this.progressBar1.SetState(1);
+                        this.progressBar2.Increment(38);
+                        this.progressBar2.SetState(3);
+                    }
+                    
+                    listView1.Clear();
+                    listView1.View = View.Details;
+                    listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
+                    listView1.Columns.Add("Status", 150, HorizontalAlignment.Center);
+
+                    for (int i = 0; i < numberOfProcess; i++)
+                    {
+                        var item = new ListViewItem();
+                        item.Text = "Process " + (i + 1);
+                        item.SubItems.Add("Ran (SRTF)");
+                        listView1.Items.Add(item);
+                    }
+
+                    listView1.Items.Add("\n");
+                    listView1.Items.Add("CPU handles : " + numberOfProcess);
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid positive number of processes.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtProcess.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Enter number of processes", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtProcess.Focus();
+            }
+        }
+
+        private void btnHRRN_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtProcess.Text))
+            {
+                if (int.TryParse(txtProcess.Text, out int numberOfProcess) && numberOfProcess > 0)
+                {
+                    Dictionary<string, double> metrics = Algorithms.hrrnAlgorithm(txtProcess.Text);
+
+                    string resultsMessage = string.Format(
+                        "HRRN Algorithm Results:\n\n" +
+                        "Average Waiting Time (AWT): {0:F2} sec\n" +
+                        "Average Turnaround Time (ATT): {1:F2} sec\n" +
+                        "CPU Utilization: {2:F1} %\n" +
+                        "Throughput: {3:F3} processes/sec",
+                        metrics["AWT"],
+                        metrics["ATT"],
+                        metrics["CPU_Utilization"],
+                        metrics["Throughput"]
+                    );
+                    MessageBox.Show(resultsMessage, "HRRN Metrics", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    if (numberOfProcess <= 10)
+                    {
+                        this.progressBar1.Increment(4);
+                        this.progressBar1.SetState(1);
+                        this.progressBar2.Increment(13);
+                        this.progressBar2.SetState(1);
+                    }
+                    else
+                    {
+                        this.progressBar1.Increment(15);
+                        this.progressBar1.SetState(1);
+                        this.progressBar2.Increment(38);
+                        this.progressBar2.SetState(3);
+                    }
+
+                    listView1.Clear();
+                    listView1.View = View.Details;
+                    listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
+                    listView1.Columns.Add("Status", 150, HorizontalAlignment.Center);
+
+                    for (int i = 0; i < numberOfProcess; i++)
+                    {
+                        var item = new ListViewItem();
+                        item.Text = "Process " + (i + 1);
+                        item.SubItems.Add("Ran (HRRN)");
+                        listView1.Items.Add(item);
+                    }
+
+                    listView1.Items.Add("\n");
+                    listView1.Items.Add("CPU handles : " + numberOfProcess);
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid positive number of processes.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtProcess.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Enter number of processes", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
             }
         }

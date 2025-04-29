@@ -63,6 +63,8 @@
             this.pictureBoxCodeOutput = new System.Windows.Forms.PictureBox();
             this.btnBarcode = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnSRTF = new System.Windows.Forms.Button();
+            this.btnHRRN = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabSelection.SuspendLayout();
@@ -310,9 +312,9 @@
             // 
             // cpuSchedulerTab
             // 
-            this.cpuSchedulerTab.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.cpuSchedulerTab.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("cpuSchedulerTab.BackgroundImage")));
-            this.cpuSchedulerTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.cpuSchedulerTab.BackColor = System.Drawing.SystemColors.Highlight;
+            this.cpuSchedulerTab.Controls.Add(this.btnSRTF);
+            this.cpuSchedulerTab.Controls.Add(this.btnHRRN);
             this.cpuSchedulerTab.Controls.Add(this.btnRoundRobin);
             this.cpuSchedulerTab.Controls.Add(this.restartApp);
             this.cpuSchedulerTab.Controls.Add(this.btnPriority);
@@ -521,6 +523,32 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnSRTF
+            // 
+            this.btnSRTF.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSRTF.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSRTF.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btnSRTF.Location = new System.Drawing.Point(80, 231);
+            this.btnSRTF.Name = "btnSRTF";
+            this.btnSRTF.Size = new System.Drawing.Size(129, 37);
+            this.btnSRTF.TabIndex = 6;
+            this.btnSRTF.Text = "SRTF Algorithm";
+            this.btnSRTF.UseVisualStyleBackColor = true;
+            this.btnSRTF.Click += new System.EventHandler(this.btnSRTF_Click);
+            // 
+            // btnHRRN
+            // 
+            this.btnHRRN.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHRRN.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHRRN.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btnHRRN.Location = new System.Drawing.Point(266, 231);
+            this.btnHRRN.Name = "btnHRRN";
+            this.btnHRRN.Size = new System.Drawing.Size(129, 37);
+            this.btnHRRN.TabIndex = 7;
+            this.btnHRRN.Text = "HRRN Algorithm";
+            this.btnHRRN.UseVisualStyleBackColor = true;
+            this.btnHRRN.Click += new System.EventHandler(this.btnHRRN_Click);
+            // 
             // CpuScheduler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -587,5 +615,7 @@
         private System.Windows.Forms.Button btnRoundRobin;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnSRTF;
+        private System.Windows.Forms.Button btnHRRN;
     }
 }
