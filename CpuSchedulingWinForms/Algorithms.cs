@@ -639,7 +639,6 @@ namespace CpuSchedulingWinForms
                         break; 
                      }
                 }
-            }
 
                 ProcessInfo highestRatioProcess = null;
                 double maxRatio = -1.0;
@@ -676,7 +675,7 @@ namespace CpuSchedulingWinForms
                 highestRatioProcess.IsCompleted = true;
                 completedProcesses++;
                 readyQueue.Remove(highestRatioProcess); 
-
+            }
 
             if(np > 0)
             {
